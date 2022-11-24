@@ -69,3 +69,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 # b612-used-products-resale-clients-side-Sayedfarabi
+
+Install package :
+1. create react app
+2. react router dom
+3. tailwind
+4. daisyui
+
