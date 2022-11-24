@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <section className='mt-8'>
+        <section>
             <footer className="footer p-10 bg-neutral text-neutral-content">
                 <div>
                     <Link to={"/"} className="btn btn-ghost normal-case text-3xl text-primary">Furniture<span className='text-secondary'>Bea</span></Link>
