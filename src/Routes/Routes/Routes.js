@@ -3,6 +3,7 @@ import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import Root from "../../Layout/Root/Root";
 import Advertisement from "../../Pages/Advertisement/Advertisement";
 import Blog from "../../Pages/Blog/Blog";
+import Categories from "../../Pages/Categories/Categories";
 import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
 import Home from "../../Pages/Home/Home/Home";
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: "/home",
                 element: <Home></Home>
+            },
+            {
+                path: "/categories",
+                element: <Categories></Categories>
             },
             {
                 path: "/advertisement",

@@ -4,7 +4,7 @@ const Button = ({ children }) => {
     return (
         <div>
             <button
-                className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white">
+                className="btn btn-sm btn-primary bg-gradient-to-r from-primary to-secondary text-white">
                 {children}
             </button>
         </div>
