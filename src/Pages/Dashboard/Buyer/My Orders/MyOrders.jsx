@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../../../App';
+import ProductTable from '../../Components/Product Table/ProductTable';
 
 const MyOrders = () => {
     const { Button } = useContext(AppContext);
@@ -19,7 +20,11 @@ const MyOrders = () => {
                             <th className='font-semibold text-xl'>Payment Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+
+                    <ProductTable
+                        action={"Pay"}
+                    ></ProductTable>
+                    {/* <tbody>
 
                         <tr>
                             <td>
@@ -53,7 +58,7 @@ const MyOrders = () => {
 
 
 
-                    </tbody>
+                    </tbody> */}
 
 
 

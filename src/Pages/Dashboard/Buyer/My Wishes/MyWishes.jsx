@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../../../App';
+import ProductTable from '../../Components/Product Table/ProductTable';
 
 const MyWishes = () => {
     const { Button } = useContext(AppContext);
     return (
         <div>
-            <h1 className='text-3xl text-secondary text-center underline my-4'>Your Wish List</h1>
+            <h1 className='text-3xl text-secondary text-center underline my-4'>Your Wishes List</h1>
 
             <div className="overflow-x-auto w-full my-8">
                 <table className="table w-full text-center lg:mx-3">
@@ -19,7 +20,11 @@ const MyWishes = () => {
                             <th className='font-semibold text-xl'>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <ProductTable
+                        action={"Order"}
+                    ></ProductTable>
+
+                    {/* <tbody>
 
                         <tr>
                             <td>
@@ -53,7 +58,7 @@ const MyWishes = () => {
 
 
 
-                    </tbody>
+                    </tbody> */}
 
 
 

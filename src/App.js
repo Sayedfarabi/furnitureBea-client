@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import Button from './Components/Button/Button';
@@ -6,11 +6,16 @@ import router from './Routes/Routes/Routes';
 
 export const AppContext = createContext();
 
-const appInfo = {
-  Button
-}
+
 
 function App() {
+  const [categories, setCategories] = useState([])
+  const appInfo = {
+    Button,
+    categories,
+    setCategories
+  }
+
   return (
     <div className='max-w-[1440px] mx-auto'>
 

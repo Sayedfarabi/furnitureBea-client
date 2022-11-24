@@ -1,9 +1,12 @@
 import React from 'react';
+
 import LimitCategoryCard from './LimitCategoryCard';
 
 
 const LimitCategories = () => {
-    const LimitCategories = [
+
+
+    const LimitCategoriesData = [
         {
             _id: "01",
             title: "Bedroom Furniture",
@@ -23,12 +26,13 @@ const LimitCategories = () => {
             img: "https://www.flaticon.com/free-icon/kitchen_2237462"
         },
     ]
+
     return (
         <div className='my-8 mx-4 md:mx-8'>
             <h3 className='text-3xl text-primary text-center my-3'>Furniture Categories</h3>
             <div className='mx-auto grid md:grid-cols-3 md:gap-3'>
                 {
-                    LimitCategories.map(category => {
+                    LimitCategoriesData.map(category => {
                         return <LimitCategoryCard
                             key={category._id}
                             category={category}>
