@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
+import toast from 'react-hot-toast'
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext)
+    console.log(user)
+
+    const handleLogOut = () => {
+        logOut()
+            .then(result => {
+                toast.success("user already log out")
+
+            })
+            .catch(error => {
+                toast.error(error.message)
+            })
+    }
+
     return (
         <div className="navbar bg-base-200">
             <div className="navbar-start">
@@ -29,15 +45,36 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link to={"/login"}>
-                    <button className='btn btn-sm btn-primary text-secondary mx-2'>Log in</button>
-                </Link>
-                <Link to={"/signup"}>
-                    <button className='btn btn-sm btn-secondary text-primary mx-2'>Sign up</button>
-                </Link>
-                <Link to={""}>
-                    <button className='btn btn-sm btn-accent mx-2'>Log out</button>
-                </Link>
+
+                {
+                    !user?.uid &&
+                    <button className='btn btn-sm btn-primary text-secondary mx-2'>
+                        <Link to={"/login"}>
+                            Log in
+                        </Link>
+                    </button>
+                }
+
+                {
+                    !user?.uid &&
+                    <button className='btn btn-sm btn-secondary text-primary mx-2'>
+                        <Link to={"/signup"}>
+                            Sign up
+                        </Link>
+                    </button>
+                }
+
+                {
+                    user?.uid &&
+                    <button onClick={handleLogOut} className='btn btn-sm btn-accent mx-2'>
+                        <Link to={""}>
+                            Log out
+                        </Link>
+                    </button>
+                }
+
+
+
             </div>
         </div>
     );

@@ -1,7 +1,68 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import { useForm } from 'react-hook-form';
+
+
 
 const SignUp = () => {
+    const { createUser, updateUser, user } = useContext(AuthContext);
+    const [signUpError, setSignUpError] = useState();
+    const { register, handleSubmit, formState: { errors } } = useForm()
+
+
+
+    const handleSignUp = data => {
+
+        if (data.image) {
+            const imgBbKey = process.env.REACT_APP_imgbb_Key;
+            const url = `https://api.imgbb.com/1/upload?key=${imgBbKey}`;
+            const image = data.image[0];
+            const formData = new FormData()
+            formData.append('image', image)
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(res => res.json())
+                .then(imageData => {
+                    const imageURL = imageData?.data?.url;
+                    data.image = imageURL;
+                    const { email, password, name, image, userRole, verifien } = data;
+                    createUser(email, password)
+                        .then(result => {
+                            setSignUpError("")
+                            const userInfo = {
+                                displayName: name,
+                                photoURL: image
+                            }
+                            updateUser(userInfo)
+                                // console.log(userInfo)
+                                .then(result => {
+                                    setSignUpError("")
+                                    console.log(result)
+                                })
+                                .catch(error => {
+                                    console.log(error)
+                                    setSignUpError(error.message)
+                                })
+                        })
+                        .catch(error => {
+                            setSignUpError(error.message)
+                        })
+
+                })
+        }
+
+
+
+
+
+
+    }
+
+
+
     return (
         <div>
             <div className="hero min-h-screen bg-base-200">
@@ -13,17 +74,19 @@ const SignUp = () => {
                         </div>
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <form className="card-body">
+                        <form onSubmit={handleSubmit(handleSignUp)} className="card-body">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name :</span>
                                 </label>
-                                <input type="text" name='name' placeholder="Enter your name" className="input input-bordered" required />
+                                <input {...register("name", { required: true })} type="text" name='name' placeholder="Enter your name" className="input input-bordered w-full" />
+                                {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
 
                                 <label className="label">
                                     <span className="label-text">Email :</span>
                                 </label>
-                                <input type="email" name='email' placeholder="Enter your email" className="input input-bordered" required />
+                                <input {...register("email", { required: true })} type="email" name='email' placeholder="Enter your email" className="input input-bordered w-full" />
+                                {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                             </div>
 
                             <div className="form-control">
@@ -31,27 +94,36 @@ const SignUp = () => {
                                     <label className="label">
                                         <span className="label-text">Password :</span>
                                     </label>
-                                    <input type="password" name='password' placeholder="Enter password" className="input input-bordered" required />
+                                    <input {...register("password",
+                                        {
+                                            required: "Password is Required",
+                                            minLength: { value: 6, message: "Password must be 6 characters long" },
+                                            pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
+                                        })}
+
+                                        type="password" name='password' placeholder="Enter password" className="input input-bordered w-full" />
+
+                                    {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                                 </div>
 
 
-                                <div>
+                                <div className='mb-4'>
                                     <fieldset className='input input-bordered mt-2'>
 
                                         <legend>Select a Role:</legend>
 
                                         <div className='flex justify-evenly items-center'>
                                             <div>
-                                                <input className='mx-2' type="radio" id="buyer" name="role" value="buyer"
-                                                    checked />
-                                                <label for="buyer">Buyer</label>
+                                                <input {...register("userRole", { required: "must be select one" })} className='mx-2' type="radio" id="buyer" name="userRole" value="buyer" />
+                                                <label htmlFor="buyer">Buyer</label>
                                             </div>
 
                                             <div>
-                                                <input className='mx-2' type="radio" id="seller" name="role" value="seller" />
+                                                <input {...register("userRole", { required: true })} className='mx-2' type="radio" id="seller" name="userRole" value="seller" />
                                                 <label htmlFor="seller">Seller</label>
                                             </div>
                                         </div>
+                                        {errors.userRole && <p className='text-red-500'>{errors.userRole.message}</p>}
 
                                     </fieldset>
                                 </div>
@@ -61,17 +133,19 @@ const SignUp = () => {
                                         <span className="label-text">Verified :</span>
                                     </label>
                                     <div className='flex items-center input input-bordered'>
-                                        <input className='mx-2' type="checkbox" name='verify' id='false' value={false} checked disabled />
+                                        <input {...register("verified")} className='mx-2' type="checkbox" name='verified' id='false' defaultValue={false} checked />
                                         <label htmlFor="false">False
                                         </label>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="label">
-                                        <span className="label-text">Photo (file) :</span>
+                                    <label name="image" value={false} className="label">
+                                        <span className="label-text">Photo Upload :</span>
                                     </label>
-                                    <input type="file" name='photo' placeholder="Enter your photo URL" className="input input-bordered" />
+                                    <input {...register("image", { required: "photo is required" })} type="file" name='image' className="input input-bordered w-full" />
+
+                                    {errors.image && <p className='text-red-500 '>{errors.image.message}</p>}
                                 </div>
 
                                 <label className="label">
@@ -80,11 +154,11 @@ const SignUp = () => {
                             </div>
 
                             <div>
-                                <p className='text-red-400 text-center'>Error message</p>
+                                <p className='text-red-400 text-center'>{signUpError}</p>
                             </div>
 
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">Register</button>
+                                <input className='btn btn-primary w-full' value="Sign Up" type="submit" />
                             </div>
                         </form>
                     </div>
