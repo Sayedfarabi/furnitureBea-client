@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../../../App';
 
-const ProductTable = ({ action }) => {
-    const { Button } = useContext(AppContext);
+const UserTable = ({ action, verified }) => {
+    const { Button } = useContext(AppContext)
 
     return (
-
         <tbody>
 
             <tr>
@@ -20,12 +19,15 @@ const ProductTable = ({ action }) => {
                 </td>
                 <td className='text-xl font-light'>
                     <div>
-                        Used Bed
+                        Akash
                     </div>
                 </td>
 
                 <td className='text-xl font-light'>
-                    <div> $ <span>1000</span></div>
+                    <div>akash123@gmail.com</div>
+                </td>
+                <td className='text-xl font-light'>
+                    <button className='btn btn-xs btn-accent'>{verified}</button>
                 </td>
                 <td className='text-xl font-light'>
                     <Button>{action}</Button>
@@ -33,8 +35,7 @@ const ProductTable = ({ action }) => {
             </tr>
 
         </tbody>
-
     );
 };
 
-export default ProductTable;
+export default UserTable;

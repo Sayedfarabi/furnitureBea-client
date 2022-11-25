@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../../../../App';
+import React from 'react';
 import ProductTable from '../../Components/Product Table/ProductTable';
 
 const MyProducts = () => {
 
-    const { Button } = useContext(AppContext);
 
 
     return (

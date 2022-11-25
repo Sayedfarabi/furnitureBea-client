@@ -10,8 +10,8 @@ const DashboardLayout = () => {
             <div className='md:flex'>
                 <div className='md:w-1/5 md:border border-primary'>
                     <div>
-                        <h4 className="text-3xl underline text-primary text-center mt-4">
-                            <Link to={"/dashboard"}>Dashboard</Link>
+                        <h4 className="sm:text-4xl text-3xl underline text-primary text-center mt-4">
+                            <Link to={"/dashboard"}>Dashboard Menu</Link>
                         </h4>
                     </div>
 
@@ -20,7 +20,7 @@ const DashboardLayout = () => {
                     </div>
                 </div>
 
-                <div className='md:w-4/5 min-h-screen border border-dotted border-secondary'>
+                <div className='md:w-4/5 min-h-screen mx-auto border border-dotted border-secondary'>
                     <Outlet></Outlet>
                 </div>
             </div>
