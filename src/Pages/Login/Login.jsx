@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
 const Login = () => {
+    const { loading } = useContext(AuthContext);
+    console.log(loading)
     return (
         <div style={{ minHeight: "75vh" }}>
             <div className="hero min-h-screen bg-base-200">

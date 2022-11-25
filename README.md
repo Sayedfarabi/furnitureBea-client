@@ -75,4 +75,5 @@ Install package :
 2. react router dom
 3. tailwind
 4. daisyui
+5. hero icon
 
