@@ -2,13 +2,19 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+
+
 
 
 
 const SignUp = () => {
-    const { createUser, updateUser, user } = useContext(AuthContext);
+    const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState();
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const api = process.env.REACT_APP_db_url;
+    const getTokenUrl = `${api}/getToken`;
+    const userAddToDbUrl = `${api}/userAddToDb`;
 
 
 
@@ -28,10 +34,11 @@ const SignUp = () => {
                 .then(imageData => {
                     const imageURL = imageData?.data?.url;
                     data.image = imageURL;
-                    const { email, password, name, image, userRole, verifien } = data;
+                    const { email, password, name, image, userRole, verified } = data;
                     createUser(email, password)
                         .then(result => {
                             setSignUpError("")
+                            // console.log(result);
                             const userInfo = {
                                 displayName: name,
                                 photoURL: image
@@ -40,7 +47,48 @@ const SignUp = () => {
                                 // console.log(userInfo)
                                 .then(result => {
                                     setSignUpError("")
-                                    console.log(result)
+                                    const userData = {
+                                        email, name, image, userRole, verified
+                                    }
+                                    // User Add To Database
+
+                                    fetch(userAddToDbUrl, {
+                                        method: 'POST',
+                                        headers: {
+                                            'content-type': 'application/json',
+                                        },
+                                        body: JSON.stringify(userData)
+                                    })
+                                        .then(res => res.json())
+                                        .then(result => {
+                                            // console.log(result.success)  
+                                            const userEmail = {
+                                                email: email
+                                            }
+                                            if (result.success) {
+                                                toast.success(result.message)
+                                                fetch(getTokenUrl, {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'content-type': 'application/json'
+                                                    },
+                                                    body: JSON.stringify(userEmail)
+                                                })
+                                                    .then(res => res.json())
+                                                    .then(result => {
+                                                        console.log(result)
+                                                        if (result.success) {
+                                                            const token = result.token;
+                                                            toast.success(result.message)
+                                                            localStorage.setItem("furnitureBea-token", token)
+                                                        } else {
+                                                            toast.error(result.message)
+                                                        }
+                                                    })
+                                            }
+                                        })
+
+
                                 })
                                 .catch(error => {
                                     console.log(error)
@@ -53,11 +101,6 @@ const SignUp = () => {
 
                 })
         }
-
-
-
-
-
 
     }
 
@@ -107,7 +150,7 @@ const SignUp = () => {
                                 </div>
 
 
-                                <div className='mb-4'>
+                                <div className='my-4'>
                                     <fieldset className='input input-bordered mt-2'>
 
                                         <legend>Select a Role:</legend>

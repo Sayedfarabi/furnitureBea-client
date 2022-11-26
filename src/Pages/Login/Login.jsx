@@ -8,6 +8,8 @@ const Login = () => {
     const { signIn, signInWithGoogle } = useContext(AuthContext);
     const [signInError, setSignInError] = useState();
     const { register, handleSubmit, formState: { errors }, resetField } = useForm()
+    const api = process.env.REACT_APP_db_url;
+    const getTokenUrl = `${api}/getToken`;
 
 
     const handleSignIn = data => {
@@ -16,6 +18,30 @@ const Login = () => {
             .then(result => {
                 setSignInError("")
                 toast.success("Sign in success")
+
+                // Get token from Database
+
+                const userEmail = {
+                    email: email
+                }
+                fetch(getTokenUrl, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(userEmail)
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        console.log(result)
+                        if (result.success) {
+                            const token = result.token;
+                            toast.success(result.message)
+                            localStorage.setItem("furnitureBea-token", token)
+                        } else {
+                            toast.error(result.message)
+                        }
+                    })
             })
             .catch(error => {
                 console.log(error)
