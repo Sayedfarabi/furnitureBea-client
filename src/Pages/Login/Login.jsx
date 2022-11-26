@@ -7,8 +7,9 @@ import toast from 'react-hot-toast';
 const Login = () => {
     const { signIn, signInWithGoogle } = useContext(AuthContext);
     const [signInError, setSignInError] = useState();
-    const { register, handleSubmit, formState: { errors }, resetField } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const api = process.env.REACT_APP_db_url;
+    const userAddToDbUrl = `${api}/userAddToDb`;
     const getTokenUrl = `${api}/getToken`;
 
 
@@ -53,8 +54,65 @@ const Login = () => {
         signInWithGoogle()
             .then(result => {
                 setSignInError("")
-                console.log(result.user);
                 toast.success("Sign in success")
+                const user = result.user;
+                console.log(user);
+
+                // Get user data from Auth
+                const {
+                    displayName,
+                    email,
+                    photoURL
+                } = user;
+
+                // Create User Data to add Database
+                const userData = {
+                    name: displayName,
+                    email: email,
+                    image: photoURL,
+                    userRole: "buyer",
+                    verified: "false"
+                }
+
+                // User Data Add to Database
+                fetch(userAddToDbUrl, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                    body: JSON.stringify(userData)
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        const userEmail = {
+                            email: email
+                        }
+                        if (result.success) {
+                            toast.success(result.message)
+
+                            // Get GWT Token from Database
+                            fetch(getTokenUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'content-type': 'application/json'
+                                },
+                                body: JSON.stringify(userEmail)
+                            })
+                                .then(res => res.json())
+                                .then(result => {
+                                    console.log(result)
+                                    if (result.success) {
+                                        const token = result.token;
+                                        toast.success(result.message)
+                                        localStorage.setItem("furnitureBea-token", token)
+                                    } else {
+                                        toast.error(result.message)
+                                    }
+                                })
+                        }
+                    })
+
+
             })
             .catch(error => {
                 setSignInError(error.message)

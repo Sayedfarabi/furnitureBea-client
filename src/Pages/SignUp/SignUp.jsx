@@ -13,8 +13,8 @@ const SignUp = () => {
     const [signUpError, setSignUpError] = useState();
     const { register, handleSubmit, formState: { errors } } = useForm()
     const api = process.env.REACT_APP_db_url;
-    const getTokenUrl = `${api}/getToken`;
     const userAddToDbUrl = `${api}/userAddToDb`;
+    const getTokenUrl = `${api}/getToken`;
 
 
 
@@ -24,8 +24,12 @@ const SignUp = () => {
             const imgBbKey = process.env.REACT_APP_imgbb_Key;
             const url = `https://api.imgbb.com/1/upload?key=${imgBbKey}`;
             const image = data.image[0];
+
+            // Using FormData for image input
             const formData = new FormData()
             formData.append('image', image)
+
+            // Get image url from imagebb
             fetch(url, {
                 method: 'POST',
                 body: formData
@@ -35,23 +39,25 @@ const SignUp = () => {
                     const imageURL = imageData?.data?.url;
                     data.image = imageURL;
                     const { email, password, name, image, userRole, verified } = data;
+
+                    // Create User Account
                     createUser(email, password)
                         .then(result => {
                             setSignUpError("")
-                            // console.log(result);
                             const userInfo = {
                                 displayName: name,
                                 photoURL: image
                             }
+
+                            // Update User Info
                             updateUser(userInfo)
-                                // console.log(userInfo)
                                 .then(result => {
                                     setSignUpError("")
                                     const userData = {
                                         email, name, image, userRole, verified
                                     }
-                                    // User Add To Database
 
+                                    // User Add To Database
                                     fetch(userAddToDbUrl, {
                                         method: 'POST',
                                         headers: {
@@ -61,12 +67,13 @@ const SignUp = () => {
                                     })
                                         .then(res => res.json())
                                         .then(result => {
-                                            // console.log(result.success)  
                                             const userEmail = {
                                                 email: email
                                             }
                                             if (result.success) {
                                                 toast.success(result.message)
+
+                                                // Get GWT Token from Database
                                                 fetch(getTokenUrl, {
                                                     method: 'POST',
                                                     headers: {
