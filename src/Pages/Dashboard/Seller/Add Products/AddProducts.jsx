@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../../../../App';
 
 
 
 const AddProducts = () => {
+    const { categories } = useContext(AppContext);
+    console.log(categories)
 
     return (
         <div className='bg-base-100'>

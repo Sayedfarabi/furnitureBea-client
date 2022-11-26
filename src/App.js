@@ -11,6 +11,7 @@ export const AppContext = createContext();
 
 function App() {
   const [categories, setCategories] = useState([])
+
   const appInfo = {
     Button,
     categories,

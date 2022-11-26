@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../../../App';
 
 import LimitCategoryCard from './LimitCategoryCard';
 
 
 const LimitCategories = () => {
+    const { categories } = useContext(AppContext)
 
 
     const LimitCategoriesData = [
@@ -32,7 +34,7 @@ const LimitCategories = () => {
             <h3 className='text-3xl text-primary text-center my-3'>Furniture Categories</h3>
             <div className='mx-auto grid md:grid-cols-3 md:gap-3'>
                 {
-                    LimitCategoriesData.map(category => {
+                    categories.map(category => {
                         return <LimitCategoryCard
                             key={category._id}
                             category={category}>
