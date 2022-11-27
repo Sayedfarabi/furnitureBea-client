@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../../../App';
 
-const ProductTable = ({ action }) => {
-    const { Button } = useContext(AppContext);
+const ProductTable = ({ action1, action2, inStock, title, url, handleAction1, handleAction2 }) => {
 
     return (
 
@@ -10,25 +9,28 @@ const ProductTable = ({ action }) => {
 
             <tr>
                 <td>
-                    <div>
-                        <div className="avatar">
-                            <div className="mask mask-squircle w-12 h-12">
-                                <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
-                            </div>
+
+                    <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                            <img src={url} alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
+
                 </td>
                 <td className='text-xl font-light'>
                     <div>
-                        Used Bed
+                        {title}
                     </div>
                 </td>
 
                 <td className='text-xl font-light'>
-                    <div> $ <span>1000</span></div>
+                    <div> {inStock}</div>
                 </td>
                 <td className='text-xl font-light'>
-                    <Button>{action}</Button>
+                    <button onClick={handleAction1} className="btn btn-sm btn-primary">{action1}</button>
+                </td>
+                <td className='text-xl font-light'>
+                    <button onClick={handleAction2} className="btn btn-sm">{action2}</button>
                 </td>
             </tr>
 

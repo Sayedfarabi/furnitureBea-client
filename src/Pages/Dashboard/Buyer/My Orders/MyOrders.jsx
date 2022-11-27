@@ -15,13 +15,20 @@ const MyOrders = () => {
 
                             <th className='font-semibold text-xl'>Product Image</th>
                             <th className='font-semibold text-xl'>Product Title</th>
-                            <th className='font-semibold text-xl'>Price</th>
+                            <th className='font-semibold text-xl'>In Stack</th>
                             <th className='font-semibold text-xl'>Payment Status</th>
+                            <th className='font-semibold text-xl'>Delete</th>
                         </tr>
                     </thead>
 
                     <ProductTable
-                        action={"Pay"}
+                        image={"url"}
+                        title={"bed"}
+                        inStock={"available"}
+                        action1={"Pay"}
+                        action2={"Delete"}
+                        handleAction1={""}
+                        handleAction2={""}
                     ></ProductTable>
 
                 </table>

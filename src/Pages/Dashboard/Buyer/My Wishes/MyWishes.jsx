@@ -16,12 +16,19 @@ const MyWishes = () => {
 
                             <th className='font-semibold text-xl'>Product Image</th>
                             <th className='font-semibold text-xl'>Product Title</th>
-                            <th className='font-semibold text-xl'>Price</th>
+                            <th className='font-semibold text-xl'>In Stock</th>
                             <th className='font-semibold text-xl'>Action</th>
+                            <th className='font-semibold text-xl'>Delete</th>
                         </tr>
                     </thead>
                     <ProductTable
-                        action={"Order"}
+                        image={"url"}
+                        title={"bed"}
+                        inStock={"Available"}
+                        action1={"Order"}
+                        action2={"Delete"}
+                        handleAction1={""}
+                        handleAction2={""}
                     ></ProductTable>
 
                 </table>

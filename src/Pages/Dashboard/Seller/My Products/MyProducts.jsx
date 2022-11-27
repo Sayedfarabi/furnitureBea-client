@@ -17,12 +17,19 @@ const MyProducts = () => {
 
                             <th className='font-semibold text-xl'>Product Image</th>
                             <th className='font-semibold text-xl'>Product Title</th>
-                            <th className='font-semibold text-xl'>Price</th>
+                            <th className='font-semibold text-xl'>In Stock</th>
+                            <th className='font-semibold text-xl'>Advertisement</th>
                             <th className='font-semibold text-xl'>Action</th>
                         </tr>
                     </thead>
                     <ProductTable
-                        action={"Details"}
+                        image={"url"}
+                        title={"bed"}
+                        inStock={"Available"}
+                        action1={"Add"}
+                        action2={"Delete"}
+                        handleAction1={""}
+                        handleAction2={""}
                     ></ProductTable>
                     {/* <tbody>
 

@@ -21,8 +21,11 @@ const AllBuyers = () => {
                     </thead>
 
                     <UserTable
+                        image={"url"}
+                        name={"Akash"}
                         verified={"Pending"}
                         action={"Delete"}
+                        handleAction={""}
                     >
                     </UserTable>
 

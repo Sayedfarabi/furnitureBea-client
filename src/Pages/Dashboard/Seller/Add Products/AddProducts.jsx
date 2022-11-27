@@ -49,6 +49,7 @@ const AddProducts = () => {
                         data.categoryId = category._id;
                         data.postedDate = postedDate;
                         data.postedTime = postedTime;
+                        data.inStock = "available";
                         toast.success("image url convert success")
 
                         // console.log(data)

@@ -1,19 +1,24 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const Login = () => {
-    const { signIn, signInWithGoogle } = useContext(AuthContext);
+    const { signIn, signInWithGoogle, loading } = useContext(AuthContext);
     const [signInError, setSignInError] = useState();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [dbLoading, setDbLoading] = useState(false);
+    const { register, handleSubmit } = useForm();
     const api = process.env.REACT_APP_db_url;
     const userAddToDbUrl = `${api}/userAddToDb`;
     const getTokenUrl = `${api}/getToken`;
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
 
     const handleSignIn = data => {
+        setDbLoading(true)
         const { email, password } = data;
         signIn(email, password)
             .then(result => {
@@ -39,6 +44,8 @@ const Login = () => {
                             const token = result.token;
                             toast.success(result.message)
                             localStorage.setItem("furnitureBea-token", token)
+                            navigate(from, { replace: true });
+                            setDbLoading(false)
                         } else {
                             toast.error(result.message)
                         }
@@ -51,6 +58,7 @@ const Login = () => {
             })
     }
     const googleHandler = () => {
+        setDbLoading(true)
         signInWithGoogle()
             .then(result => {
                 setSignInError("")
@@ -105,6 +113,8 @@ const Login = () => {
                                         const token = result.token;
                                         toast.success(result.message)
                                         localStorage.setItem("furnitureBea-token", token)
+                                        navigate(from, { replace: true });
+                                        setDbLoading(false)
                                     } else {
                                         toast.error(result.message)
                                     }
@@ -119,6 +129,7 @@ const Login = () => {
                 toast.error(error.message)
             })
     }
+
 
     return (
         <div style={{ minHeight: "75vh" }}>
@@ -150,6 +161,12 @@ const Login = () => {
                                 <label className="label">
                                     <small>Haven't an account ? Please go to <Link to={"/signup"}><span className='text-blue-500 underline'>Sign up</span></Link></small>
                                 </label>
+
+                                <div className="flex flex-col w-full border-opacity-50">
+
+                                    <div className="divider">OR</div>
+
+                                </div>
 
                                 <label className="label mx-auto">
                                     <button onClick={googleHandler} className='btn btn-outline btn-primary btn-sm rounded-md'>Sign in with Google</button>

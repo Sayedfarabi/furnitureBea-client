@@ -17,6 +17,7 @@ import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import SignUp from "../../Pages/SignUp/SignUp";
+import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 
 // const api = process.env.REACT_APP_db_url;
 
@@ -38,11 +39,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/categories",
-                element: <Categories></Categories>
+                element: <PrivateRoutes><Categories></Categories></PrivateRoutes>
             },
             {
                 path: "/advertisement",
-                element: <Advertisement></Advertisement>
+                element: <PrivateRoutes><Advertisement></Advertisement></PrivateRoutes>
             },
             {
                 path: "/blog",
@@ -61,44 +62,44 @@ const router = createBrowserRouter([
 
     {
         path: "/dashboard",
-        element: <DashboardLayout></DashboardLayout>,
+        element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
         errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: "/dashboard",
-                element: <Welcome></Welcome>
+                element: <PrivateRoutes><Welcome></Welcome></PrivateRoutes>
             },
             {
                 path: "/dashboard/myOrders",
-                element: <MyOrders></MyOrders>
+                element: <PrivateRoutes><MyOrders></MyOrders></PrivateRoutes>
             },
             {
                 path: "/dashboard/myWishes",
-                element: <MyWishes></MyWishes>
+                element: <PrivateRoutes><MyWishes></MyWishes></PrivateRoutes>
             },
             {
                 path: "/dashboard/myProducts",
-                element: <MyProducts></MyProducts>
+                element: <PrivateRoutes><MyProducts></MyProducts></PrivateRoutes>
             },
             {
                 path: "/dashboard/addProducts",
-                element: <AddProducts></AddProducts>
+                element: <PrivateRoutes><AddProducts></AddProducts></PrivateRoutes>
             },
             {
                 path: "/dashboard/allBuyers",
-                element: <AllBuyers></AllBuyers>
+                element: <PrivateRoutes><AllBuyers></AllBuyers></PrivateRoutes>
             },
             {
                 path: "/dashboard/allSellers",
-                element: <AllSellers></AllSellers>
+                element: <PrivateRoutes><AllSellers></AllSellers></PrivateRoutes>
             },
             {
                 path: "/dashboard/addCategory",
-                element: <AddCategory></AddCategory>
+                element: <PrivateRoutes><AddCategory></AddCategory></PrivateRoutes>
             },
             {
                 path: "/dashboard/addAdmin",
-                element: <AddAdmin></AddAdmin>
+                element: <PrivateRoutes><AddAdmin></AddAdmin></PrivateRoutes>
             },
         ]
 

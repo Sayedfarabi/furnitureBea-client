@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../../../../App';
+import React from 'react';
 
-const UserTable = ({ action, verified }) => {
-    const { Button } = useContext(AppContext)
+
+const UserTable = ({ action, verified, handleAction, image, name }) => {
+
 
     return (
         <tbody>
@@ -12,14 +12,14 @@ const UserTable = ({ action, verified }) => {
                     <div>
                         <div className="avatar">
                             <div className="mask mask-squircle w-12 h-12">
-                                <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
+                                <img src={image} alt="Avatar Tailwind CSS Component" />
                             </div>
                         </div>
                     </div>
                 </td>
                 <td className='text-xl font-light'>
                     <div>
-                        Akash
+                        {name}
                     </div>
                 </td>
 
@@ -27,10 +27,10 @@ const UserTable = ({ action, verified }) => {
                     <div>akash123@gmail.com</div>
                 </td>
                 <td className='text-xl font-light'>
-                    <button className='btn btn-xs btn-accent'>{verified}</button>
+                    <button className='btn btn-sm btn-primary'>{verified}</button>
                 </td>
                 <td className='text-xl font-light'>
-                    <Button>{action}</Button>
+                    <button onClick={handleAction} className="btn btn-sm">{action}</button>
                 </td>
             </tr>
 
