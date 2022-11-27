@@ -26,7 +26,6 @@ const router = createBrowserRouter([
         path: "/",
         element: <Root></Root>,
         errorElement: <ErrorPage></ErrorPage>,
-        // loader: fetch(`${api}/`),
         loader: () => fetch('http://localhost:5000/'),
         children: [
             {

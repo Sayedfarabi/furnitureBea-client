@@ -10,12 +10,18 @@ export const AppContext = createContext();
 
 
 function App() {
+  const [dbUser, setDbUser] = useState();
   const [categories, setCategories] = useState([])
+  const [api, setApi] = useState();
 
   const appInfo = {
     Button,
     categories,
-    setCategories
+    setCategories,
+    api,
+    setApi,
+    dbUser,
+    setDbUser
   }
 
   return (

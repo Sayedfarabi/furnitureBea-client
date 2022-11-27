@@ -77,3 +77,6 @@ Install package :
 4. daisyui
 5. hero icon
 
+Admin User : furniture-bea-admin@gmail.com
+Admin Password : 123Sayed 
+

@@ -70,8 +70,8 @@ const Login = () => {
                     name: displayName,
                     email: email,
                     image: photoURL,
-                    userRole: "buyer",
-                    verified: "false"
+                    userRole: "buyer"
+
                 }
 
                 // User Data Add to Database
@@ -100,7 +100,7 @@ const Login = () => {
                             })
                                 .then(res => res.json())
                                 .then(result => {
-                                    console.log(result)
+                                    // console.log(result)
                                     if (result.success) {
                                         const token = result.token;
                                         toast.success(result.message)
@@ -148,15 +148,11 @@ const Login = () => {
 
 
                                 <label className="label">
-                                    <Link to={""} href="#" className="label-text-alt link link-hover">Forgot password?</Link>
+                                    <small>Haven't an account ? Please go to <Link to={"/signup"}><span className='text-blue-500 underline'>Sign up</span></Link></small>
                                 </label>
 
                                 <label className="label mx-auto">
                                     <button onClick={googleHandler} className='btn btn-outline btn-primary btn-sm rounded-md'>Sign in with Google</button>
-                                </label>
-
-                                <label className="label">
-                                    <small>Haven't an account ? Please go to <Link to={"/signup"}><span className='text-blue-500 underline'>Sign up</span></Link></small>
                                 </label>
                             </div>
 

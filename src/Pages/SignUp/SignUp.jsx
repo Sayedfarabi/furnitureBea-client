@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 const SignUp = () => {
     const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState();
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const api = process.env.REACT_APP_db_url;
     const userAddToDbUrl = `${api}/userAddToDb`;
     const getTokenUrl = `${api}/getToken`;
@@ -38,7 +38,7 @@ const SignUp = () => {
                 .then(imageData => {
                     const imageURL = imageData?.data?.url;
                     data.image = imageURL;
-                    const { email, password, name, image, userRole, verified } = data;
+                    const { email, password, name, image, userRole } = data;
 
                     // Create User Account
                     createUser(email, password)
@@ -54,7 +54,7 @@ const SignUp = () => {
                                 .then(result => {
                                     setSignUpError("")
                                     const userData = {
-                                        email, name, image, userRole, verified
+                                        email, name, image, userRole
                                     }
 
                                     // User Add To Database
@@ -124,7 +124,9 @@ const SignUp = () => {
                         </div>
                     </div>
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+
                         <form onSubmit={handleSubmit(handleSignUp)} className="card-body">
+
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name :</span>
@@ -148,7 +150,7 @@ const SignUp = () => {
                                         {
                                             required: "Password is Required",
                                             minLength: { value: 6, message: "Password must be 6 characters long" },
-                                            pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
+                                            pattern: { value: /(?=.*[A-Z])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
                                         })}
 
                                         type="password" name='password' placeholder="Enter password" className="input input-bordered w-full" />
@@ -178,16 +180,6 @@ const SignUp = () => {
                                     </fieldset>
                                 </div>
 
-                                <div>
-                                    <label className="label">
-                                        <span className="label-text">Verified :</span>
-                                    </label>
-                                    <div className='flex items-center input input-bordered'>
-                                        <input {...register("verified")} className='mx-2' type="checkbox" name='verified' id='false' defaultValue={false} checked />
-                                        <label htmlFor="false">False
-                                        </label>
-                                    </div>
-                                </div>
 
                                 <div>
                                     <label name="image" value={false} className="label">
