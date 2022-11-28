@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AppContext } from '../../../App';
 
 
@@ -16,7 +17,7 @@ const LimitCategoryCard = ({ category }) => {
                     <h2 className="card-title">{categoryName}</h2>
                     <p>{description}</p>
                     <div className="card-actions">
-                        <Button>See Products</Button>
+                        <Button><Link to={`/category/${category?._id}`}>See Products</Link></Button>
                     </div>
                 </div>
             </div>

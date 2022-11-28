@@ -16,6 +16,7 @@ import MyProducts from "../../Pages/Dashboard/Seller/My Products/MyProducts";
 import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
+import Products from "../../Pages/Products/Products/Products";
 import SignUp from "../../Pages/SignUp/SignUp";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 const api = process.env.REACT_APP_db_url;
@@ -40,6 +41,12 @@ const router = createBrowserRouter([
             {
                 path: "/categories",
                 element: <Categories></Categories>
+            },
+            {
+                path: "/category/:id",
+                element: <Products></Products>,
+                // loader: ({ params }) => fetch(`${api}/category/${params.id}`)
+
             },
             {
                 path: "/advertisement",
