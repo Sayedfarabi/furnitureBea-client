@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { AppContext } from '../../../../App';
 
 const AddCategory = () => {
-    const { api, categoriesRefetch } = useContext(AppContext);
+    const { api } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
 
@@ -38,7 +38,7 @@ const AddCategory = () => {
                         .then(result => {
                             if (result.success) {
                                 toast.success(result.message)
-                                categoriesRefetch()
+
                             } else {
                                 toast.error(result.message)
                             }

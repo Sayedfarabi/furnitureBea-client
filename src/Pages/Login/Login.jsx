@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import Loading from '../../Components/Loading/Loading';
 
 const Login = () => {
     const { signIn, signInWithGoogle, loading } = useContext(AuthContext);
@@ -57,6 +58,7 @@ const Login = () => {
                 toast.error(error.message)
             })
     }
+
     const googleHandler = () => {
         setDbLoading(true)
         signInWithGoogle()
@@ -130,6 +132,10 @@ const Login = () => {
             })
     }
 
+
+    if (dbLoading || loading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div style={{ minHeight: "75vh" }}>

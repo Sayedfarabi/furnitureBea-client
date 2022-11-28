@@ -6,7 +6,7 @@ import bannerImg from "../../../Assets/banner.png";
 const Banner = () => {
     const { Button } = useContext(AppContext)
     return (
-        <div className='my-6'>
+        <div className='mb-6'>
             <div className="hero h-96" style={{ backgroundImage: `url(${bannerImg})` }}>
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="hero-content text-center text-base-100">

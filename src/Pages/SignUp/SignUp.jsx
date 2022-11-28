@@ -1,25 +1,30 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import Loading from '../../Components/Loading/Loading';
 
 
 
 
 
 const SignUp = () => {
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, updateUser, loading } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState();
+    const [dbLoading, setDbLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const api = process.env.REACT_APP_db_url;
     const userAddToDbUrl = `${api}/userAddToDb`;
     const getTokenUrl = `${api}/getToken`;
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
 
 
     const handleSignUp = data => {
-
+        setDbLoading(true)
         if (data.image) {
             const imgBbKey = process.env.REACT_APP_imgbb_Key;
             const url = `https://api.imgbb.com/1/upload?key=${imgBbKey}`;
@@ -88,6 +93,8 @@ const SignUp = () => {
                                                             const token = result.token;
                                                             toast.success(result.message)
                                                             localStorage.setItem("furnitureBea-token", token)
+                                                            navigate(from, { replace: true });
+                                                            setDbLoading(false)
                                                         } else {
                                                             toast.error(result.message)
                                                         }
@@ -112,6 +119,9 @@ const SignUp = () => {
     }
 
 
+    if (dbLoading || loading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div>

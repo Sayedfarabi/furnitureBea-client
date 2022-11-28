@@ -8,8 +8,7 @@ import { AppContext } from '../../../../App';
 const AddProducts = () => {
     const { categories, dbUser, api } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    // const api = process.env.REACT_APP_db_url;
-    // console.log(dbUser)
+    console.log(categories)
 
 
 
@@ -50,6 +49,7 @@ const AddProducts = () => {
                         data.postedDate = postedDate;
                         data.postedTime = postedTime;
                         data.inStock = "available";
+                        data.reported = false;
                         toast.success("image url convert success")
 
                         // console.log(data)

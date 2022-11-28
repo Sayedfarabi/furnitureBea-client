@@ -7,13 +7,13 @@ import Navbar from '../../Pages/Shared/Navbar/Navbar';
 
 
 const Root = () => {
-    const { setCategories, setApi, setDbUser } = useContext(AppContext);
+    const data = useLoaderData()
+    const { setApi, setDbUser, setCategories } = useContext(AppContext);
     const { user } = useContext(AuthContext);
     const email = user?.email;
     const api = process.env.REACT_APP_db_url;
-    const data = useLoaderData()
-    setCategories(data)
     setApi(api)
+    setCategories(data)
 
 
 
@@ -26,6 +26,7 @@ const Root = () => {
                 }
             })
     }, [api, email, setDbUser])
+
 
 
 

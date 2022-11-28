@@ -1,12 +1,33 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../../App';
+import Loading from '../../../Components/Loading/Loading';
 
 import LimitCategoryCard from './LimitCategoryCard';
 
 
 const LimitCategories = () => {
-    const { categories } = useContext(AppContext)
+    const { api } = useContext(AppContext);
+
+
+    const { data: limitCategories = [], isLoading } = useQuery({
+        queryKey: [api],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`${api}/`)
+                const data = await res.json()
+                return data
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+    })
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
 
 
     return (
@@ -14,7 +35,7 @@ const LimitCategories = () => {
             <h3 className='text-3xl text-primary text-center my-3'>Furniture Categories</h3>
             <div className='mx-auto grid md:grid-cols-3 md:gap-3'>
                 {
-                    categories.map(category => {
+                    limitCategories.map(category => {
                         return <LimitCategoryCard
                             key={category._id}
                             category={category}>

@@ -3,7 +3,7 @@ import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import Root from "../../Layout/Root/Root";
 import Advertisement from "../../Pages/Advertisement/Advertisement";
 import Blog from "../../Pages/Blog/Blog";
-import Categories from "../../Pages/Categories/Categories";
+import Categories from "../../Pages/Categories/Categories/Categories";
 import AddAdmin from "../../Pages/Dashboard/Admin/Add Admin/AddAdmin";
 import AddCategory from "../../Pages/Dashboard/Admin/Add Category/AddCategory";
 import AllBuyers from "../../Pages/Dashboard/Admin/All Buyers/AllBuyers";
@@ -18,8 +18,8 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import SignUp from "../../Pages/SignUp/SignUp";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
+const api = process.env.REACT_APP_db_url;
 
-// const api = process.env.REACT_APP_db_url;
 
 
 const router = createBrowserRouter([
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Root></Root>,
         errorElement: <ErrorPage></ErrorPage>,
-        loader: () => fetch('http://localhost:5000/'),
+        loader: () => fetch(`${api}/allCategories`),
         children: [
             {
                 path: "/",

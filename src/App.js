@@ -13,7 +13,8 @@ function App() {
   const [dbUser, setDbUser] = useState();
   const [categories, setCategories] = useState([])
   const [api, setApi] = useState();
-  const [categoriesRefetch, setCategoriesRefetch] = useState()
+
+
 
   const appInfo = {
     Button,
@@ -23,8 +24,7 @@ function App() {
     setApi,
     dbUser,
     setDbUser,
-    categoriesRefetch,
-    setCategoriesRefetch
+
   }
 
   return (
