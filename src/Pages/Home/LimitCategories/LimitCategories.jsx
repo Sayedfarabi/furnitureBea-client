@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AppContext } from '../../../App';
 
 import LimitCategoryCard from './LimitCategoryCard';
@@ -7,27 +8,6 @@ import LimitCategoryCard from './LimitCategoryCard';
 const LimitCategories = () => {
     const { categories } = useContext(AppContext)
 
-
-    const LimitCategoriesData = [
-        {
-            _id: "01",
-            title: "Bedroom Furniture",
-            body: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam, quisquam.",
-            img: "https://uxwing.com/double-bed-icon/"
-        },
-        {
-            _id: "01",
-            title: "Drawing Furniture",
-            body: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam, quisquam.",
-            img: "https://freesvg.org/sofa"
-        },
-        {
-            _id: "01",
-            title: "Kitchen Furniture",
-            body: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam, quisquam.",
-            img: "https://www.flaticon.com/free-icon/kitchen_2237462"
-        },
-    ]
 
     return (
         <div className='my-8 mx-4 md:mx-8'>
@@ -41,7 +21,11 @@ const LimitCategories = () => {
                         </LimitCategoryCard>
                     })
                 }
-
+            </div>
+            <div className='flex justify-center my-5'>
+                <div>
+                    <button className='btn btn-xs bg-indigo-500'><Link to={"/categories"}>More</Link></button>
+                </div>
             </div>
         </div>
     );

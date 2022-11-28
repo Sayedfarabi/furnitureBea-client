@@ -16,7 +16,7 @@ const LimitCategoryCard = ({ category }) => {
                     <h2 className="card-title">{categoryName}</h2>
                     <p>{description}</p>
                     <div className="card-actions">
-                        <Button>Explore more</Button>
+                        <Button>See Products</Button>
                     </div>
                 </div>
             </div>

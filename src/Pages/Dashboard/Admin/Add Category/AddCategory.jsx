@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { AppContext } from '../../../../App';
 
 const AddCategory = () => {
+    const { api, categoriesRefetch } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    // const [addDataError, setAddDataError] = useState("");
-    // const [imgUrl, setImgUrl] = useState("");
-    const addCategoryApi = `${process.env.REACT_APP_db_url}/addCategory`;
+
 
     const handleData = data => {
         // console.log(data);
@@ -27,7 +27,7 @@ const AddCategory = () => {
                     data.image = photoUrl?.data?.url;
                     // console.log(data);
 
-                    fetch(addCategoryApi, {
+                    fetch(`${api}/addCategory`, {
                         method: "POST",
                         headers: {
                             "content-type": "application/json"
@@ -38,6 +38,7 @@ const AddCategory = () => {
                         .then(result => {
                             if (result.success) {
                                 toast.success(result.message)
+                                categoriesRefetch()
                             } else {
                                 toast.error(result.message)
                             }

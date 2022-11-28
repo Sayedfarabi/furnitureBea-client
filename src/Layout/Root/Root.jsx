@@ -14,7 +14,8 @@ const Root = () => {
     const data = useLoaderData()
     setCategories(data)
     setApi(api)
-    // console.log(email)
+
+
 
     useEffect(() => {
         fetch(`${api}/user?email=${email}`)
