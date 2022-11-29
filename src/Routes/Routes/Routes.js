@@ -45,8 +45,7 @@ const router = createBrowserRouter([
             {
                 path: "/category/:id",
                 element: <Products></Products>,
-                // loader: ({ params }) => fetch(`${api}/category/${params.id}`)
-
+                loader: async ({ params }) => await fetch(`${api}/category/${params.id}`)
             },
             {
                 path: "/advertisement",
