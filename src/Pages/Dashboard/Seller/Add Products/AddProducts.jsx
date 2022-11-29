@@ -50,6 +50,7 @@ const AddProducts = () => {
                         data.postedTime = postedTime;
                         data.inStock = "available";
                         data.reported = false;
+                        data.sellerVerified = dbUser?.verified;
                         toast.success("image url convert success")
 
                         // console.log(data)
