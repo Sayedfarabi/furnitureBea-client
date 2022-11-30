@@ -9,11 +9,6 @@ const PrivateRoutes = ({ children }) => {
 
     if (loading) {
         return (
-            // <div className='min-h-screen flex justify-center items-center '>
-            //     <div>
-            //         <progress className="progress w-56"></progress>
-            //     </div>
-            // </div>
             <Loading></Loading>
         )
     }
@@ -22,7 +17,7 @@ const PrivateRoutes = ({ children }) => {
         return children;
     }
 
-    return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+    return <Navigate to="/login" state={{ from: location }} replace ></Navigate>;
 };
 
 export default PrivateRoutes;

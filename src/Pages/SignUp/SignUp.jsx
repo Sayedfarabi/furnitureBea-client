@@ -16,9 +16,9 @@ const SignUp = () => {
     const api = process.env.REACT_APP_db_url;
     const userAddToDbUrl = `${api}/userAddToDb`;
     const getTokenUrl = `${api}/getToken`;
-    const location = useLocation();
+    // const location = useLocation();
     const navigate = useNavigate();
-    const from = location.state?.from?.pathname || '/';
+    // const from = location.state?.from?.pathname || '/';
 
 
 
@@ -57,7 +57,6 @@ const SignUp = () => {
                             updateUser(userInfo)
                                 .then(result => {
                                     setSignUpError("")
-                                    navigate(from, { replace: true });
                                     const userData = {
                                         email, name, image, userRole
                                     }
@@ -94,6 +93,7 @@ const SignUp = () => {
                                                             const token = result.token;
                                                             toast.success(result.message)
                                                             localStorage.setItem("furnitureBea-token", token)
+                                                            navigate("/");
 
                                                         } else {
                                                             toast.error(result.message)

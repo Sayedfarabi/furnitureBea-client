@@ -15,6 +15,7 @@ const Products = () => {
     const { register, handleSubmit } = useForm();
 
 
+
     const handleModal = data => {
         data.productId = modalData._id;
         // console.log(data)

@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast'
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
+    const navigate = useNavigate();
     // console.log(user)
 
     const handleLogOut = () => {
         logOut()
             .then(result => {
+                navigate("/")
                 toast.success("user already log out")
 
             })
@@ -41,7 +43,10 @@ const Navbar = () => {
                     <li><Link className='rounded-lg' to={"/categories"}>Categories</Link></li>
                     <li><Link className='rounded-lg' to={"/advertisement"}>Advertisement</Link></li>
                     <li><Link className='rounded-lg' to={"/blog"}>Blog</Link></li>
-                    <li><Link className='rounded-lg' to={"/dashboard"}>Dashboard</Link></li>
+                    {
+                        user?.uid &&
+                        <li><Link className='rounded-lg' to={"/dashboard"}>Dashboard</Link></li>
+                    }
                 </ul>
             </div>
             <div className="navbar-end">

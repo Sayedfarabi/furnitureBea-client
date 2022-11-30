@@ -40,7 +40,7 @@ const Login = () => {
                 })
                     .then(res => res.json())
                     .then(result => {
-                        console.log(result)
+                        // console.log(result)
                         if (result.success) {
                             const token = result.token;
                             toast.success(result.message)
