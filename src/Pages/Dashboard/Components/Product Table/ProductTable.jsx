@@ -30,7 +30,7 @@ const ProductTable = ({ action1, action2, inStock, title, url, handleAction1, ha
                     <div> {inStock}</div>
                 </td>
                 <td className='text-xl font-light'>
-                    <button onClick={() => handleAction1(id)} className="btn btn-sm btn-primary" disabled={dashboardDbUser?.verified}>
+                    <button onClick={() => handleAction1(id)} className="btn btn-sm btn-primary" disabled={!dashboardDbUser?.verified}>
                         {action1}</button>
                 </td>
                 <td className='text-xl font-light'>

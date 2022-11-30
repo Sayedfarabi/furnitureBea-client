@@ -16,8 +16,11 @@ const Products = () => {
 
 
 
+
     const handleModal = data => {
-        data.productId = modalData._id;
+        data.inStock = modalData?.inStock;
+        data.productImage = modalData?.productImage;
+        data.productId = modalData?._id;
         // console.log(data)
         if (data) {
             fetch(`${api}/addBooking`, {

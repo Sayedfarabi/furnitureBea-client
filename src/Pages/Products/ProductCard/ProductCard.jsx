@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 const ProductCard = ({ product, setModalData }) => {
     const { dbUser, api } = useContext(AppContext);
-    const { productImage, productName, condition, description, location, originalPrice, postedDate, postedTime, resalePrice, sellerName, yearsOfUsedProduct, _id } = product;
+    const { productImage, productName, condition, description, location, originalPrice, postedDate, postedTime, resalePrice, sellerName, yearsOfUsedProduct, _id, inStock } = product;
 
     // console.log(dbUser);
     const handlerWish = () => {
@@ -13,7 +13,10 @@ const ProductCard = ({ product, setModalData }) => {
             name: dbUser?.name,
             email: dbUser?.email,
             productId: _id,
-            productName
+            productName,
+            productImage,
+            inStock
+
         }
 
         if (wishData) {
@@ -127,7 +130,7 @@ const ProductCard = ({ product, setModalData }) => {
                             <label
                                 htmlFor="book-modal"
                                 className="btn btn-sm btn-primary"
-                                disabled={!dbUser?.verified}
+                                disabled={dbUser?.verified}
                                 onClick={() => setModalData(product)}
                             > Book Now
                             </label>
