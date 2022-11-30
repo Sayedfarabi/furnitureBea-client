@@ -1,8 +1,79 @@
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext } from 'react';
+import Loading from '../../../../Components/Loading/Loading';
+import { DashboardContext } from '../../../../Layout/DashboardLayout/DashboardLayout';
 import ProductTable from '../../Components/Product Table/ProductTable';
+import toast from 'react-hot-toast';
 
 const MyProducts = () => {
+    const { api, dashboardDbUser } = useContext(DashboardContext);
 
+    const { data: myProducts = [], isLoading, refetch } = useQuery({
+        queryKey: ["/myProducts", api, dashboardDbUser],
+        queryFn: async () => {
+            try {
+                const res = await fetch(`${api}/myProducts?email=${dashboardDbUser?.email}`);
+                const data = res.json();
+                return data;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    })
+
+    if (isLoading) {
+        return <Loading></Loading>
+    }
+    const products = myProducts?.data;
+
+
+    // Delete Product Function
+
+    const productDeleteHandler = (id) => {
+        if (id) {
+
+            fetch(`${api}/productDelete?id=${id}`, {
+                method: "DELETE",
+                headers: {
+                    "content-type": "application/json"
+                }
+
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.deletedCount > 0) {
+                        refetch()
+                        toast.success("This product is deleted")
+                    }
+
+                })
+
+        }
+    }
+
+    // Add to Advertisement Function 
+
+    const productAddToAdvertisement = id => {
+        if (id) {
+            fetch(`${api}/productAddToAdvertisement?id=${id}`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                }
+
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result?.success) {
+                        refetch()
+                        toast.success(result?.message)
+                    } else {
+                        toast.error(result.message)
+                    }
+
+                })
+        }
+    }
 
 
     return (
@@ -22,50 +93,24 @@ const MyProducts = () => {
                             <th className='font-semibold text-xl'>Action</th>
                         </tr>
                     </thead>
-                    <ProductTable
-                        image={"url"}
-                        title={"bed"}
-                        inStock={"Available"}
-                        action1={"Add"}
-                        action2={"Delete"}
-                        handleAction1={""}
-                        handleAction2={""}
-                    ></ProductTable>
-                    {/* <tbody>
 
-                        <tr>
-                            <td>
-                                <div>
-                                    <div className="avatar">
-                                        <div className="mask mask-squircle w-12 h-12">
-                                            <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className='text-xl font-light'>
-                                <div>
-                                    Used Bed
-                                </div>
-                            </td>
+                    {
+                        products &&
+                        products.map(product => {
+                            return <ProductTable
+                                key={product?._id}
+                                id={product?._id}
+                                url={product?.productImage}
+                                title={product?.productName}
+                                inStock={product?.inStock}
+                                action1={"Add"}
+                                action2={"Delete"}
+                                handleAction1={productAddToAdvertisement}
+                                handleAction2={productDeleteHandler}
+                            ></ProductTable>
+                        })
+                    }
 
-                            <td className='text-xl font-light'>
-                                <div> $ <span>1000</span></div>
-                            </td>
-                            <td className='text-xl font-light'>
-                                <Button>Details</Button>
-                            </td>
-                        </tr>
-
-
-
-
-
-
-
-
-
-                    </tbody> */}
 
 
 

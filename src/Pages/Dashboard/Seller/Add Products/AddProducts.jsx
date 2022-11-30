@@ -8,7 +8,7 @@ import { AppContext } from '../../../../App';
 const AddProducts = () => {
     const { categories, dbUser, api } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    console.log(categories)
+    // console.log(categories)
 
 
 

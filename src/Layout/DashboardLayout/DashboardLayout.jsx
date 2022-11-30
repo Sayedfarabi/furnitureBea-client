@@ -38,7 +38,8 @@ const DashboardLayout = () => {
 
     const dashboardInfo = {
         dashboardDbUser,
-        isLoading
+        isLoading,
+        api
     }
 
 

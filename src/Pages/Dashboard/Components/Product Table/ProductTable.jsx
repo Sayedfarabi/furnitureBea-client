@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../../../App';
+import { DashboardContext } from '../../../../Layout/DashboardLayout/DashboardLayout';
 
-const ProductTable = ({ action1, action2, inStock, title, url, handleAction1, handleAction2 }) => {
+const ProductTable = ({ action1, action2, inStock, title, url, handleAction1, handleAction2, id }) => {
+
+    const { dashboardDbUser } = useContext(DashboardContext);
+    // console.log(dashboardDbUser);
 
     return (
 
@@ -27,10 +30,11 @@ const ProductTable = ({ action1, action2, inStock, title, url, handleAction1, ha
                     <div> {inStock}</div>
                 </td>
                 <td className='text-xl font-light'>
-                    <button onClick={handleAction1} className="btn btn-sm btn-primary">{action1}</button>
+                    <button onClick={() => handleAction1(id)} className="btn btn-sm btn-primary" disabled={dashboardDbUser?.verified}>
+                        {action1}</button>
                 </td>
                 <td className='text-xl font-light'>
-                    <button onClick={handleAction2} className="btn btn-sm">{action2}</button>
+                    <button onClick={() => handleAction2(id)} className="btn btn-sm">{action2}</button>
                 </td>
             </tr>
 
