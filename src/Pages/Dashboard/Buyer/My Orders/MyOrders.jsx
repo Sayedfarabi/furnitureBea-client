@@ -4,9 +4,11 @@ import ProductTable from '../../Components/Product Table/ProductTable';
 import Loading from '../../../../Components/Loading/Loading';
 import { DashboardContext } from '../../../../Layout/DashboardLayout/DashboardLayout';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const MyOrders = () => {
     const { api, dashboardDbUser } = useContext(DashboardContext);
+    const navigate = useNavigate();
 
     const { data: bookingProducts = [], isLoading, refetch } = useQuery({
         queryKey: ["/booking", api, dashboardDbUser],
@@ -49,6 +51,10 @@ const MyOrders = () => {
         }
     }
 
+    const moveToPayment = id => {
+        navigate("/dashboard/payment")
+    }
+
     return (
         <div>
             <h1 className='text-3xl text-secondary text-center underline my-4'>My Orders</h1>
@@ -79,7 +85,7 @@ const MyOrders = () => {
                                 inStock={product?.inStock}
                                 action1={"Pay"}
                                 action2={"Delete"}
-                                handleAction1={"productAddToAdvertisement"}
+                                handleAction1={moveToPayment}
                                 handleAction2={bookingDeleteHandler}
                             ></ProductTable>
                         })

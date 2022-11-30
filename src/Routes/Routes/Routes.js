@@ -10,6 +10,7 @@ import AllBuyers from "../../Pages/Dashboard/Admin/All Buyers/AllBuyers";
 import AllSellers from "../../Pages/Dashboard/Admin/All Sellers/AllSellers";
 import MyOrders from "../../Pages/Dashboard/Buyer/My Orders/MyOrders";
 import MyWishes from "../../Pages/Dashboard/Buyer/My Wishes/MyWishes";
+import Payment from "../../Pages/Dashboard/Buyer/Payment/Payment";
 import Welcome from "../../Pages/Dashboard/Components/Welcome/Welcome";
 import AddProducts from "../../Pages/Dashboard/Seller/Add Products/AddProducts";
 import MyProducts from "../../Pages/Dashboard/Seller/My Products/MyProducts";
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
             {
                 path: "/dashboard/addAdmin",
                 element: <PrivateRoutes><AddAdmin></AddAdmin></PrivateRoutes>
+            },
+            {
+                path: "/dashboard/payment",
+                element: <PrivateRoutes><Payment></Payment></PrivateRoutes>
             },
         ]
 
