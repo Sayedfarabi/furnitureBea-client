@@ -115,9 +115,7 @@ const ProductCard = ({ product, setModalData }) => {
                     </div>
 
                     <div className="card-actions justify-end">
-                        {/* <div>
-                            <button className='btn btn-sm bg-lime-600'>Wish</button>
-                        </div> */}
+
                         <div className='ml-2'>
                             <label
                                 htmlFor="wish-modal"
@@ -129,8 +127,10 @@ const ProductCard = ({ product, setModalData }) => {
                             <label
                                 htmlFor="book-modal"
                                 className="btn btn-sm btn-primary"
+                                disabled={!dbUser?.verified}
                                 onClick={() => setModalData(product)}
-                            >Book Now</label>
+                            > Book Now
+                            </label>
                         </div>
                     </div>
 

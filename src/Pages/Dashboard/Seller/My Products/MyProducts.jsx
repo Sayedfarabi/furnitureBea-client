@@ -88,7 +88,7 @@ const MyProducts = () => {
 
                             <th className='font-semibold text-xl'>Product Image</th>
                             <th className='font-semibold text-xl'>Product Title</th>
-                            <th className='font-semibold text-xl'>In Stock</th>
+                            <th className='font-semibold text-xl'>Sales Status</th>
                             <th className='font-semibold text-xl'>Advertisement</th>
                             <th className='font-semibold text-xl'>Action</th>
                         </tr>
