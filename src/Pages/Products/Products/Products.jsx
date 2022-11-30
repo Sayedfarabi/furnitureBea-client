@@ -8,14 +8,12 @@ import ProductCard from '../ProductCard/ProductCard';
 
 const Products = () => {
     const data = useLoaderData();
-    const { dbUser, api } = useContext(AppContext);
+    const { api } = useContext(AppContext);
     const { user } = useContext(AuthContext);
     const products = data?.products;
     const [modalData, setModalData] = useState(null)
     const { register, handleSubmit } = useForm();
-    // console.log(modalData)
-    // console.log(user)
-    // console.log(dbUser)
+
 
     const handleModal = data => {
         data.productId = modalData._id;
@@ -38,6 +36,7 @@ const Products = () => {
                 })
         }
     }
+
 
 
 
@@ -75,7 +74,7 @@ const Products = () => {
 
                                 <div className="card  w-full max-w-sm shadow-2xl bg-base-100">
 
-                                    {/* Modal Form */}
+
 
                                     <form onSubmit={handleSubmit(handleModal)} className="card-body">
 

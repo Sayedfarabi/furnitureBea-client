@@ -1,8 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { AppContext } from '../../../App';
+import toast from 'react-hot-toast';
 
 const ProductCard = ({ product, setModalData }) => {
-    const { productImage, productName, condition, description, location, originalPrice, postedDate, postedTime, resalePrice, sellerName, yearsOfUsedProduct } = product;
+    const { dbUser, api } = useContext(AppContext);
+    const { productImage, productName, condition, description, location, originalPrice, postedDate, postedTime, resalePrice, sellerName, yearsOfUsedProduct, _id } = product;
+
+    // console.log(dbUser);
+    const handlerWish = () => {
+        const wishData = {
+            name: dbUser?.name,
+            email: dbUser?.email,
+            productId: _id,
+            productName
+        }
+
+        if (wishData) {
+            fetch(`${api}/addWish`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(wishData)
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) {
+                        toast.success(result.message)
+                    } else {
+                        toast.error(result.message)
+                    }
+
+                    // continue ...
+                })
+        }
+    }
 
     return (
         <div className='mx-auto mb-8'>
@@ -81,12 +114,18 @@ const ProductCard = ({ product, setModalData }) => {
                         </p>
                     </div>
 
-                    <div className="card-actions justify-between">
-                        <div>
+                    <div className="card-actions justify-end">
+                        {/* <div>
                             <button className='btn btn-sm bg-lime-600'>Wish</button>
+                        </div> */}
+                        <div className='ml-2'>
+                            <label
+                                htmlFor="wish-modal"
+                                className="btn btn-sm bg-lime-600"
+                                onClick={handlerWish}
+                            >Wish</label>
                         </div>
                         <div>
-                            {/* <Button>Add to Order</Button> */}
                             <label
                                 htmlFor="book-modal"
                                 className="btn btn-sm btn-primary"

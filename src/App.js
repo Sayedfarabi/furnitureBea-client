@@ -14,6 +14,7 @@ function App() {
   const [categories, setCategories] = useState([])
   const [api, setApi] = useState();
 
+  // console.log(dbUser);
 
 
   const appInfo = {

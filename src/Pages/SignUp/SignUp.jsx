@@ -12,7 +12,6 @@ import Loading from '../../Components/Loading/Loading';
 const SignUp = () => {
     const { createUser, updateUser, loading } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState();
-    const [dbLoading, setDbLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const api = process.env.REACT_APP_db_url;
     const userAddToDbUrl = `${api}/userAddToDb`;
@@ -24,7 +23,7 @@ const SignUp = () => {
 
 
     const handleSignUp = data => {
-        setDbLoading(true)
+
         if (data.image) {
             const imgBbKey = process.env.REACT_APP_imgbb_Key;
             const url = `https://api.imgbb.com/1/upload?key=${imgBbKey}`;
@@ -58,6 +57,7 @@ const SignUp = () => {
                             updateUser(userInfo)
                                 .then(result => {
                                     setSignUpError("")
+                                    navigate(from, { replace: true });
                                     const userData = {
                                         email, name, image, userRole
                                     }
@@ -78,6 +78,7 @@ const SignUp = () => {
                                             if (result.success) {
                                                 toast.success(result.message)
 
+
                                                 // Get GWT Token from Database
                                                 fetch(getTokenUrl, {
                                                     method: 'POST',
@@ -93,8 +94,7 @@ const SignUp = () => {
                                                             const token = result.token;
                                                             toast.success(result.message)
                                                             localStorage.setItem("furnitureBea-token", token)
-                                                            navigate(from, { replace: true });
-                                                            setDbLoading(false)
+
                                                         } else {
                                                             toast.error(result.message)
                                                         }
@@ -119,7 +119,7 @@ const SignUp = () => {
     }
 
 
-    if (dbLoading || loading) {
+    if (loading) {
         return <Loading></Loading>
     }
 

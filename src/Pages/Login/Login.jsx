@@ -8,7 +8,6 @@ import Loading from '../../Components/Loading/Loading';
 const Login = () => {
     const { signIn, signInWithGoogle, loading } = useContext(AuthContext);
     const [signInError, setSignInError] = useState();
-    const [dbLoading, setDbLoading] = useState(false);
     const { register, handleSubmit } = useForm();
     const api = process.env.REACT_APP_db_url;
     const userAddToDbUrl = `${api}/userAddToDb`;
@@ -19,12 +18,13 @@ const Login = () => {
 
 
     const handleSignIn = data => {
-        setDbLoading(true)
+
         const { email, password } = data;
         signIn(email, password)
             .then(result => {
                 setSignInError("")
                 toast.success("Sign in success")
+                navigate(from, { replace: true });
 
                 // Get token from Database
 
@@ -45,8 +45,8 @@ const Login = () => {
                             const token = result.token;
                             toast.success(result.message)
                             localStorage.setItem("furnitureBea-token", token)
-                            navigate(from, { replace: true });
-                            setDbLoading(false)
+
+
                         } else {
                             toast.error(result.message)
                         }
@@ -60,13 +60,13 @@ const Login = () => {
     }
 
     const googleHandler = () => {
-        setDbLoading(true)
         signInWithGoogle()
             .then(result => {
                 setSignInError("")
                 toast.success("Sign in success")
+                navigate(from, { replace: true });
                 const user = result.user;
-                console.log(user);
+                // console.log(user);
 
                 // Get user data from Auth
                 const {
@@ -115,8 +115,7 @@ const Login = () => {
                                         const token = result.token;
                                         toast.success(result.message)
                                         localStorage.setItem("furnitureBea-token", token)
-                                        navigate(from, { replace: true });
-                                        setDbLoading(false)
+
                                     } else {
                                         toast.error(result.message)
                                     }
@@ -133,7 +132,7 @@ const Login = () => {
     }
 
 
-    if (dbLoading || loading) {
+    if (loading) {
         return <Loading></Loading>
     }
 
