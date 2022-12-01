@@ -12,6 +12,6 @@ Install package :
 Live client site link :  https://furniturebea-7b359.web.app
 vercel server site link : https://furniture-bea-server.vercel.app
 
-Admin User : furniture-bea-admin2@gmail.com
+Admin Email : furniture-bea-admin2@gmail.com
 Admin Password : Sayed123 
 
