@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const UserTable = ({ action, verified, handleAction, image, name }) => {
+const UserTable = ({ action, verified, handleAction, handleAction2, image, name, email }) => {
 
 
     return (
@@ -17,6 +17,7 @@ const UserTable = ({ action, verified, handleAction, image, name }) => {
                         </div>
                     </div>
                 </td>
+
                 <td className='text-xl font-light'>
                     <div>
                         {name}
@@ -24,15 +25,18 @@ const UserTable = ({ action, verified, handleAction, image, name }) => {
                 </td>
 
                 <td className='text-xl font-light'>
-                    <div>akash123@gmail.com</div>
+                    <div>{email}</div>
                 </td>
+
                 <td className='text-xl font-light'>
-                    <button className='btn btn-sm btn-primary'>{verified}</button>
+                    <button onClick={() => handleAction2(email)} className='btn btn-sm btn-primary'>{!verified ? "pending" : "verified"}</button>
                 </td>
+
                 <td className='text-xl font-light'>
-                    <button onClick={handleAction} className="btn btn-sm">{action}</button>
+                    <button onClick={() => handleAction(email)} className="btn btn-sm">{action}</button>
                 </td>
             </tr>
+
 
         </tbody>
     );

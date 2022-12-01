@@ -18,6 +18,7 @@ const AddCategory = () => {
             const imageFile = data.image[0];
             formData.append('image', imageFile)
 
+            // For get Image URL from ImageBb
             fetch(url, {
                 method: "POST",
                 body: formData
@@ -27,10 +28,12 @@ const AddCategory = () => {
                     data.image = photoUrl?.data?.url;
                     // console.log(data);
 
+                    // For Add Category to Database 
                     fetch(`${api}/addCategory`, {
                         method: "POST",
                         headers: {
-                            "content-type": "application/json"
+                            "content-type": "application/json",
+                            authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
                         },
                         body: JSON.stringify(data)
                     })

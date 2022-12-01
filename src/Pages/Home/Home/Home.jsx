@@ -23,7 +23,7 @@ const Home = () => {
     }
     const products = productsData.data;
     const haveProducts = products.length === 0;
-    console.log(haveProducts, products.length);
+    // console.log(haveProducts, products.length);
 
 
     return (

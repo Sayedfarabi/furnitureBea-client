@@ -7,12 +7,18 @@ import toast from 'react-hot-toast';
 
 const MyProducts = () => {
     const { api, dashboardDbUser } = useContext(DashboardContext);
+    console.log(dashboardDbUser);
 
     const { data: myProducts = [], isLoading, refetch } = useQuery({
-        queryKey: ["/myProducts", api, dashboardDbUser],
+        queryKey: ["myProducts", api, dashboardDbUser],
         queryFn: async () => {
             try {
-                const res = await fetch(`${api}/myProducts?email=${dashboardDbUser?.email}`);
+                const res = await fetch(`${api}/myProducts?email=${dashboardDbUser?.email}`, {
+                    headers: {
+                        "content-type": "application/json",
+                        authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
+                    },
+                });
                 const data = res.json();
                 return data;
             } catch (error) {
@@ -26,7 +32,6 @@ const MyProducts = () => {
     }
     const products = myProducts?.data;
 
-
     // Delete Product Function
 
     const productDeleteHandler = (id) => {
@@ -35,7 +40,8 @@ const MyProducts = () => {
             fetch(`${api}/productDelete?id=${id}`, {
                 method: "DELETE",
                 headers: {
-                    "content-type": "application/json"
+                    "content-type": "application/json",
+                    authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
                 }
 
             })
@@ -58,7 +64,8 @@ const MyProducts = () => {
             fetch(`${api}/productAddToAdvertisement?id=${id}`, {
                 method: "POST",
                 headers: {
-                    "content-type": "application/json"
+                    "content-type": "application/json",
+                    authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
                 }
 
             })
@@ -78,7 +85,7 @@ const MyProducts = () => {
 
     return (
         <div>
-            <h1 className='text-3xl text-secondary text-center underline my-4'>Your Products</h1>
+            <h1 className='text-3xl text-secondary text-center underline my-4'>My Products</h1>
 
             <div className="overflow-x-auto w-full my-8">
                 <table className="table w-full text-center lg:mx-3">

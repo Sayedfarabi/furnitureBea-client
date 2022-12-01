@@ -30,7 +30,6 @@ const Navbar = () => {
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li><Link className='rounded-lg' to={"/home"}>Home</Link></li>
                         <li><Link className='rounded-lg' to={"/categories"}>Categories</Link></li>
-                        <li><Link className='rounded-lg' to={"/advertisement"}>Advertisement</Link></li>
                         <li><Link className='rounded-lg' to={"/blog"}>Blog</Link></li>
                         <li><Link className='rounded-lg' to={"/dashboard"}>Dashboard</Link></li>
                     </ul>
@@ -41,7 +40,6 @@ const Navbar = () => {
                 <ul className="menu menu-horizontal p-0">
                     <li><Link className='rounded-lg' to={"/home"}>Home</Link></li>
                     <li><Link className='rounded-lg' to={"/categories"}>Categories</Link></li>
-                    <li><Link className='rounded-lg' to={"/advertisement"}>Advertisement</Link></li>
                     <li><Link className='rounded-lg' to={"/blog"}>Blog</Link></li>
                     {
                         user?.uid &&

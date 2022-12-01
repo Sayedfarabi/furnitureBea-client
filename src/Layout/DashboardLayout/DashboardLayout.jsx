@@ -30,7 +30,7 @@ const DashboardLayout = () => {
         }
     })
 
-    if (loading && isLoading) {
+    if (loading || isLoading) {
         return <Loading></Loading>
     }
 

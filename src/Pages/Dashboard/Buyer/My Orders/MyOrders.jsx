@@ -14,7 +14,12 @@ const MyOrders = () => {
         queryKey: ["/booking", api, dashboardDbUser],
         queryFn: async () => {
             try {
-                const res = await fetch(`${api}/booking?email=${dashboardDbUser?.email}`);
+                const res = await fetch(`${api}/booking?email=${dashboardDbUser?.email}`, {
+                    headers: {
+                        "content-type": "application/json",
+                        authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
+                    }
+                });
                 const data = res.json();
                 return data;
             } catch (error) {
@@ -35,7 +40,8 @@ const MyOrders = () => {
             fetch(`${api}/bookingDelete?id=${id}`, {
                 method: "DELETE",
                 headers: {
-                    "content-type": "application/json"
+                    "content-type": "application/json",
+                    authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
                 }
 
             })
@@ -51,8 +57,9 @@ const MyOrders = () => {
         }
     }
 
+
     const moveToPayment = id => {
-        navigate("/dashboard/payment")
+        navigate(`/dashboard/payment/${id}`)
     }
 
     return (

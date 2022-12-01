@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout/DashboardLayout";
 import Root from "../../Layout/Root/Root";
-import Advertisement from "../../Pages/Advertisement/Advertisement";
 import Blog from "../../Pages/Blog/Blog";
 import Categories from "../../Pages/Categories/Categories/Categories";
 import AddAdmin from "../../Pages/Dashboard/Admin/Add Admin/AddAdmin";
@@ -19,7 +18,10 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Products from "../../Pages/Products/Products/Products";
 import SignUp from "../../Pages/SignUp/SignUp";
+import AdminRoute from "../AdminRoute/AdminRoute";
+import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
+import SellerRoute from "../SellerRoute/SellerRoute";
 const api = process.env.REACT_APP_db_url;
 
 
@@ -45,12 +47,13 @@ const router = createBrowserRouter([
             },
             {
                 path: "/category/:id",
-                element: <Products></Products>,
-                loader: async ({ params }) => await fetch(`${api}/category/${params.id}`)
-            },
-            {
-                path: "/advertisement",
-                element: <PrivateRoutes><Advertisement></Advertisement></PrivateRoutes>
+                element: <PrivateRoutes><Products></Products></PrivateRoutes>,
+                loader: async ({ params }) => await fetch(`${api}/category/${params.id}`, {
+                    headers: {
+                        "content-type": "application/json",
+                        authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
+                    }
+                })
             },
             {
                 path: "/blog",
@@ -74,44 +77,88 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/dashboard",
-                element: <PrivateRoutes><Welcome></Welcome></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <Welcome></Welcome>
+                </PrivateRoutes>
             },
             {
                 path: "/dashboard/myOrders",
-                element: <PrivateRoutes><MyOrders></MyOrders></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <BuyerRoute>
+                        <MyOrders></MyOrders>
+                    </BuyerRoute>
+                </PrivateRoutes>
             },
             {
                 path: "/dashboard/myWishes",
-                element: <PrivateRoutes><MyWishes></MyWishes></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <BuyerRoute>
+                        <MyWishes></MyWishes>
+                    </BuyerRoute>
+                </PrivateRoutes>
             },
             {
                 path: "/dashboard/myProducts",
-                element: <PrivateRoutes><MyProducts></MyProducts></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <SellerRoute>
+                        <MyProducts></MyProducts>
+                    </SellerRoute>
+                </PrivateRoutes>
             },
             {
                 path: "/dashboard/addProducts",
-                element: <PrivateRoutes><AddProducts></AddProducts></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <SellerRoute>
+                        <AddProducts></AddProducts>
+                    </SellerRoute>
+                </PrivateRoutes>
             },
             {
                 path: "/dashboard/allBuyers",
-                element: <PrivateRoutes><AllBuyers></AllBuyers></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <AdminRoute>
+                        <AllBuyers></AllBuyers>
+                    </AdminRoute>
+                </PrivateRoutes>
             },
             {
                 path: "/dashboard/allSellers",
-                element: <PrivateRoutes><AllSellers></AllSellers></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <AdminRoute>
+                        <AllSellers></AllSellers>
+                    </AdminRoute>
+                </PrivateRoutes>
             },
             {
                 path: "/dashboard/addCategory",
-                element: <PrivateRoutes><AddCategory></AddCategory></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <AdminRoute>
+                        <AddCategory></AddCategory>
+                    </AdminRoute>
+                </PrivateRoutes>
             },
             {
                 path: "/dashboard/addAdmin",
-                element: <PrivateRoutes><AddAdmin></AddAdmin></PrivateRoutes>
+                element: <PrivateRoutes>
+                    <AdminRoute>
+                        <AddAdmin></AddAdmin>
+                    </AdminRoute>
+                </PrivateRoutes>
             },
             {
-                path: "/dashboard/payment",
-                element: <PrivateRoutes><Payment></Payment></PrivateRoutes>
-            },
+                path: "/dashboard/payment/:id",
+                element: <PrivateRoutes>
+                    <BuyerRoute>
+                        <Payment></Payment>
+                    </BuyerRoute>
+                </PrivateRoutes>,
+                loader: ({ params }) => fetch(`${api}/dashboard/payment/${params.id}`, {
+                    headers: {
+                        "content-type": "application/json",
+                        authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
+                    }
+                })
+            }
         ]
 
     }

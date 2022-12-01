@@ -38,19 +38,6 @@ const AuthProvider = ({ children }) => {
         return signOut(auth)
     }
 
-    // const userAddToDb = (url, userData) => {
-    //     fetch(url, {
-    //         method: 'POST',
-    //         headers: {
-    //             'content-type': 'application/json',
-    //         },
-    //         body: JSON.stringify(userData)
-    //     })
-    //         .then(res => res.json())
-    //         .then(result => {
-    //             console.log(result)
-    //         })
-    // }
 
 
     useEffect(() => {
@@ -66,6 +53,7 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         user,
         loading,
+        setLoading,
         createUser,
         updateUser,
         logOut,

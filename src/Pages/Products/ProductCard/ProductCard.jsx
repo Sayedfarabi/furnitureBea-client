@@ -13,6 +13,7 @@ const ProductCard = ({ product, setModalData }) => {
             name: dbUser?.name,
             email: dbUser?.email,
             productId: _id,
+            resalePrice,
             productName,
             productImage,
             inStock
@@ -23,7 +24,8 @@ const ProductCard = ({ product, setModalData }) => {
             fetch(`${api}/addWish`, {
                 method: "POST",
                 headers: {
-                    "content-type": "application/json"
+                    "content-type": "application/json",
+                    authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
                 },
                 body: JSON.stringify(wishData)
             })
@@ -130,14 +132,12 @@ const ProductCard = ({ product, setModalData }) => {
                             <label
                                 htmlFor="book-modal"
                                 className="btn btn-sm btn-primary"
-                                disabled={dbUser?.verified}
+                                disabled={!dbUser?.verified}
                                 onClick={() => setModalData(product)}
                             > Book Now
                             </label>
                         </div>
                     </div>
-
-
 
                 </div>
 

@@ -8,7 +8,7 @@ import { AppContext } from '../../../../App';
 const AddProducts = () => {
     const { categories, dbUser, api } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
-    // console.log(categories)
+    console.log(dbUser)
 
 
 
@@ -59,6 +59,7 @@ const AddProducts = () => {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json',
+                                authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
                             },
                             body: JSON.stringify(data)
                         })

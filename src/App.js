@@ -13,7 +13,6 @@ export const AppContext = createContext();
 
 function App() {
   const api = process.env.REACT_APP_db_url;
-  // const { user, loading } = useContext(AuthContext);
   const [dbUser, setDbUser] = useState();
   const [categories, setCategories] = useState([])
 

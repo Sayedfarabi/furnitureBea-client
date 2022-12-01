@@ -10,7 +10,7 @@ import Loading from '../../Components/Loading/Loading';
 
 
 const SignUp = () => {
-    const { createUser, updateUser, loading } = useContext(AuthContext);
+    const { createUser, updateUser, loading, setLoading } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const api = process.env.REACT_APP_db_url;
@@ -105,11 +105,13 @@ const SignUp = () => {
 
                                 })
                                 .catch(error => {
+                                    setLoading(false)
                                     console.log(error)
                                     setSignUpError(error.message)
                                 })
                         })
                         .catch(error => {
+                            setLoading(false)
                             setSignUpError(error.message)
                         })
 

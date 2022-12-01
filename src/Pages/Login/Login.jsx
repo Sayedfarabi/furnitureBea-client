@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import Loading from '../../Components/Loading/Loading';
 
 const Login = () => {
-    const { signIn, signInWithGoogle, loading } = useContext(AuthContext);
+    const { signIn, signInWithGoogle, loading, setLoading } = useContext(AuthContext);
     const [signInError, setSignInError] = useState();
     const { register, handleSubmit } = useForm();
     const api = process.env.REACT_APP_db_url;
@@ -53,6 +53,7 @@ const Login = () => {
                     })
             })
             .catch(error => {
+                setLoading(false)
                 console.log(error)
                 setSignInError(error.message)
                 toast.error(error.message)

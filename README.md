@@ -76,6 +76,8 @@ Install package :
 3. tailwind
 4. daisyui
 5. hero icon
+6. React Tanstank/ React query
+7. Stripe 
 
 Admin User : furniture-bea-admin@gmail.com
 Admin Password : 123Sayed 
