@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 const ProductCard = ({ product, setModalData }) => {
     const { dbUser, api } = useContext(AppContext);
-    const { productImage, productName, condition, description, location, originalPrice, postedDate, postedTime, resalePrice, sellerName, yearsOfUsedProduct, _id, inStock } = product;
+    const { productImage, productName, condition, description, location, originalPrice, postedDate, postedTime, resalePrice, sellerName, yearsOfUsedProduct, _id, inStock, sellerVerified } = product;
 
     // console.log(dbUser);
     const handlerWish = () => {
@@ -89,8 +89,8 @@ const ProductCard = ({ product, setModalData }) => {
                             <div>
                                 <p className='font-semibold'>Seller Name :</p>
                             </div>
-                            <div className='flex items-center ml-2'>
-                                <CheckCircleIcon className='w-4' />
+                            <div className={sellerVerified ? "flex text-blue-500 items-center ml-2" : "flex items-center ml-2"}>
+                                <CheckCircleIcon className="w-4" />
                             </div>
                             <div className='ml-1'>
                                 {sellerName}
