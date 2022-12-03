@@ -35,6 +35,9 @@ const MyOrders = () => {
     // console.log(products)
 
     const bookingDeleteHandler = (id) => {
+        const email = {
+            buyerEmail: dashboardDbUser.email
+        };
         if (id) {
 
             fetch(`${api}/bookingDelete?id=${id}`, {
@@ -42,7 +45,8 @@ const MyOrders = () => {
                 headers: {
                     "content-type": "application/json",
                     authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
-                }
+                },
+                body: JSON.stringify(email)
 
             })
                 .then(res => res.json())

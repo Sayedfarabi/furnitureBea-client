@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import Loading from '../../../../Components/Loading/Loading';
 import { DashboardContext } from '../../../../Layout/DashboardLayout/DashboardLayout';
 
@@ -11,6 +12,7 @@ const MyWishes = () => {
     const { api, dashboardDbUser } = useContext(DashboardContext);
     const [modalData, setModalData] = useState(null);
     const { register, handleSubmit } = useForm();
+    const navigate = useNavigate();
     const { data: wishProducts = [], isLoading, refetch } = useQuery({
         queryKey: ["/wishes", api, dashboardDbUser],
         queryFn: async () => {
@@ -34,6 +36,9 @@ const MyWishes = () => {
     }
 
     const wishDeleteHandler = (id) => {
+        const email = {
+            buyerEmail: dashboardDbUser.email
+        };
         if (id) {
 
             fetch(`${api}/wishDelete?id=${id}`, {
@@ -41,7 +46,8 @@ const MyWishes = () => {
                 headers: {
                     "content-type": "application/json",
                     authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
-                }
+                },
+                body: JSON.stringify(email)
 
             })
                 .then(res => res.json())
@@ -73,8 +79,11 @@ const MyWishes = () => {
                 .then(res => res.json())
                 .then(result => {
                     if (result?.success) {
+                        wishDeleteHandler(data?.productId)
                         setModalData(null)
+                        navigate("/dashboard/myOrders")
                         toast.success(result.message)
+
                     } else {
                         toast.error(result.message)
                     }

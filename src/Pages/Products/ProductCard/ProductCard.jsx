@@ -132,7 +132,6 @@ const ProductCard = ({ product, setModalData }) => {
                             <label
                                 htmlFor="book-modal"
                                 className="btn btn-sm btn-primary"
-                                disabled={!dbUser?.verified}
                                 onClick={() => setModalData(product)}
                             > Book Now
                             </label>

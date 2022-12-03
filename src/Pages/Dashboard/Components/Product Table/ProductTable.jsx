@@ -35,12 +35,12 @@ const ProductTable = ({ action1, action2, inStock, title, url, handleAction1, ha
                             <label
                                 htmlFor="book-modal"
                                 className="btn btn-sm btn-primary"
-                                disabled={!dashboardDbUser?.verified}
+
                                 onClick={() => handleAction1(product)}
                             > {action1}
                             </label>
                             :
-                            <button onClick={() => handleAction1(id)} className="btn btn-sm btn-primary" disabled={!dashboardDbUser?.verified}>
+                            <button onClick={() => handleAction1(id)} className="btn btn-sm btn-primary" >
                                 {action1}
                             </button>
                     }

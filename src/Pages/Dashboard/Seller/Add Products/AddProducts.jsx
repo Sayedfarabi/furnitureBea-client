@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../../../App';
 
 
@@ -9,6 +10,7 @@ const AddProducts = () => {
     const { categories, dbUser, api } = useContext(AppContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
     console.log(dbUser)
+    const navigate = useNavigate();
 
 
 
@@ -67,6 +69,7 @@ const AddProducts = () => {
                             .then(data => {
                                 // console.log(data)
                                 if (data?.success) {
+                                    navigate("/dashboard/myProducts")
                                     toast.success(data.message);
                                 } else {
                                     toast.error(data.message)
