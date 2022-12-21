@@ -31,11 +31,10 @@ const ProductTable = ({ action1, action2, inStock, title, url, handleAction1, ha
                 </td>
                 <td className='text-xl font-light'>
                     {
-                        modalOpen ?
+                        modalOpen && inStock === "available" ?
                             <label
                                 htmlFor="book-modal"
                                 className="btn btn-sm btn-primary"
-
                                 onClick={() => handleAction1(product)}
                             > {action1}
                             </label>

@@ -121,20 +121,31 @@ const ProductCard = ({ product, setModalData }) => {
 
                     <div className="card-actions justify-end">
 
-                        <div className='ml-2'>
-                            <label
-                                htmlFor="wish-modal"
-                                className="btn btn-sm bg-lime-600"
-                                onClick={handlerWish}
-                            >Wish</label>
-                        </div>
+                        {
+                            inStock === "available" &&
+                            <div className='ml-2'>
+                                <label
+                                    htmlFor="wish-modal"
+                                    className="btn btn-sm bg-lime-600"
+                                    onClick={handlerWish}
+                                >Wish</label>
+                            </div>
+
+                        }
                         <div>
-                            <label
-                                htmlFor="book-modal"
-                                className="btn btn-sm btn-primary"
-                                onClick={() => setModalData(product)}
-                            > Book Now
-                            </label>
+                            {
+                                inStock === "available" ?
+                                    <label
+                                        htmlFor="book-modal"
+                                        className="btn btn-sm btn-primary"
+                                        onClick={() => setModalData(product)}
+                                    > Book Now
+                                    </label>
+                                    :
+                                    <button className='btn btn-sm btn-accent' disabled>
+                                        Unavailable
+                                    </button>
+                            }
                         </div>
                     </div>
 

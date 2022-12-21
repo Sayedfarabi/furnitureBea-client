@@ -36,7 +36,8 @@ const LimitAdvertisement = ({ products }) => {
             fetch(`${api}/addBooking`, {
                 method: "POST",
                 headers: {
-                    "content-type": "application/json"
+                    "content-type": "application/json",
+                    authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
                 },
                 body: JSON.stringify(data)
             })

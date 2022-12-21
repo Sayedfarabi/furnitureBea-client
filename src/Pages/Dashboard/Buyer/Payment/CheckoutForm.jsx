@@ -1,31 +1,36 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useContext, useEffect, useState } from 'react';
-// import { DashboardContext } from '../../../../Layout/DashboardLayout/DashboardLayout';
+import { toast } from 'react-hot-toast';
+import { DashboardContext } from '../../../../Layout/DashboardLayout/DashboardLayout';
 
-const CheckoutForm = ({ booking }) => {
-    // const { api } = useContext(DashboardContext);
-    // const [clientSecret, setClientSecret] = useState("");
+const CheckoutForm = ({ booking, setSuccess, setTransactionId }) => {
+    const api = process.env.REACT_APP_db_url;
+    const [processing, setProcessing] = useState(false);
+    const [clientSecret, setClientSecret] = useState("");
     const [cardError, setCardError] = useState("");
     const stripe = useStripe()
     const elements = useElements()
-    // const { data } = booking;
-    // const { productPrice } = data;
-    // console.log(productPrice);
+    const buyerName = booking?.data?.buyerName;
+    const buyerEmail = booking?.data?.buyerEmail;
+    const productId = booking?.data?.productId;
+    const { productPrice } = booking?.data;
 
-    // useEffect(() => {
-    //     // Create PaymentIntent as soon as the page loads
-    //     fetch("http://localhost:5000/create-payment-intent", {
-    //         method: "POST",
-    //         headers: {
-    //             "content-type": "application/json",
-    //             authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
-    //         },
-    //         body: JSON.stringify({ productPrice }),
-    //     })
-    //         .then((res) => res.json())
-    //         .then((data) => setClientSecret(data.clientSecret));
-    // }, [api, productPrice]);
 
+    useEffect(() => {
+        // Create PaymentIntent as soon as the page loads
+        fetch(`${api}/create-payment-intent`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
+            },
+            body: JSON.stringify({ productPrice }),
+        })
+            .then((res) => res.json())
+            .then((data) => setClientSecret(data?.clientSecret));
+    }, [api, productPrice]);
+
+    // console.log(clientSecret);
 
     const handleSubmit = async (event) => {
 
@@ -50,6 +55,59 @@ const CheckoutForm = ({ booking }) => {
         } else {
             setCardError("")
         }
+
+        setProcessing(true)
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: buyerName,
+                        email: buyerEmail
+                    },
+                },
+            },
+        );
+
+        setSuccess("")
+        setTransactionId("")
+
+        if (confirmError) {
+            setCardError(confirmError.message)
+            setProcessing(false)
+            return
+        }
+        if (paymentIntent?.status === "succeeded") {
+            setSuccess("Congrats! Your payment completed")
+            setTransactionId(paymentIntent?.id)
+
+            const paymentInfo = {
+                status: paymentIntent?.status,
+                transactionId: paymentIntent?.id,
+                productId: productId,
+                buyerName,
+                buyerEmail
+            }
+            // console.log(paymentInfo);
+            fetch(`${api}/payment`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    authorization: `bearer ${localStorage.getItem('furnitureBea-token')}`
+                },
+                body: JSON.stringify(paymentInfo)
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) {
+                        toast.success(result?.message)
+                    }
+                })
+        }
+        // console.log("paymentIntent", paymentIntent);
+        setProcessing(false)
+
     }
 
     return (
@@ -75,12 +133,12 @@ const CheckoutForm = ({ booking }) => {
                     <p className='text-red-400 ml-0 '>{cardError}</p>
                 </div>
                 <div className='flex justify-end'>
-                    <button className='btn btn-sm btn-primary mt-4 ' type="submit" disabled={!stripe}>
+                    <button className='btn btn-sm btn-primary mt-4 ' type="submit" disabled={!stripe || processing || !clientSecret}>
                         Pay
                     </button>
-
                 </div>
             </div>
+
         </form>
     );
 };
